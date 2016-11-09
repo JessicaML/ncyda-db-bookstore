@@ -2,3 +2,11 @@ extends ../application.pug
 
 block content
   h1 Listing Books
+  .container
+    .row
+      each book in books
+        .col-xs-3
+          h2= book.title
+          h3= book.author
+          p= book.imageSrc
+          p= book.description
