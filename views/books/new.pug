@@ -8,16 +8,16 @@ block content
         hr
         form(action="/books" method="POST")
           div(class="form-group")
-            label Title
-            input(name="title" type="text" class="form-control")
+            label(for="book-title") Title
+            input(name="title" type="text" class="form-control" id="book-title")
           div(class="form-group")
-            label Cover Image URL
-            input(name="imageSrc" type="text" class="form-control")
+            label(for="book-cover-image") Cover Image URL
+            input(name="imageURL" type="text" class="form-control" id="book-cover-image")
           div(class="form-group")
-            label Author
-            input(name="author" type="text" class="form-control")
+            label(for="book-author") Author
+            input(name="author" type="text" class="form-control" id="book-author")
           div(class="form-group")
-            label Description
-            textarea(name="description" class="form-control" rows=5)
+            label(for="book-description") Description
+            textarea(name="description" class="form-control" rows=5 id="book-description")
           div(class="form-group text-xs-right")
             button(type="submit" class="btn btn-lg btn-success") Create a book
