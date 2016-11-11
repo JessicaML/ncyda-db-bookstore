@@ -6,16 +6,15 @@ const express = require('express'),
       Sequelize = require('sequelize');
 
 var app = express(),
-    sequelize = new Sequelize('Jessica', 'Jessica', '', { dialect: 'postgres' });
+    sequelize = new Sequelize('bulletinboard', 'Jessica', '', { dialect: 'postgres' });
 
-var booksRouter = require('./routes/books');
+var noticesRouter = require('./routes/notices');
 
-var Book = sequelize.define('book', {
+var notice = sequelize.define('notice', {
   title: Sequelize.STRING,
-  imageURL: Sequelize.STRING,
-  author: Sequelize.STRING,
-  description: Sequelize.TEXT
+  body: Sequelize.TEXT
 });
+
 
 app.use(express.static('public'));
 
@@ -34,32 +33,25 @@ app.use(methodOverride((req, res) => {
 app.set('view engine', 'pug');
 
 app.get('/', (request, response) => {
-  response.redirect('/books');
+  response.redirect('/notices');
 });
 
-app.get('/books', (request, response) => {
-  Book.findAll().then((books) => {
-    response.render('books/index', { books: books });
+app.get('/board', (request, response) => {
+  notice.findAll().then((notices) => {
+    response.render('notices/board', { notices: notices });
   });
 });
 
-app.post('/books', (request, response) => {
-  Book.create(request.body).then(() => {
-    response.redirect('/books');
+app.post('/notices', (request, response) => {
+  notice.create(request.body).then(() => {
+    response.redirect('/board');
   });
 });
 
-app.get('/books/new', (request, response) => {
-  response.render('books/new');
-});
 
-app.get('/books/:id/edit', (request, response) => {
-  Book.findById(request.params.id).then((book) => {
-    response.render('books/edit', { book: book });
-  });
-});
 
-app.use('/books', booksRouter);
+
+app.use('/notices', noticesRouter);
 
 sequelize.sync().then(() => {
   console.log('Connected to database');
